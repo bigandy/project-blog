@@ -6,9 +6,9 @@ import styles from "./homepage.module.css";
 
 import { getBlogPostList } from "@/helpers/file-helpers";
 
-const blogPosts = await getBlogPostList();
+import { BLOG_TITLE } from "@/constants";
 
-console.log({ blogPosts });
+const blogPosts = await getBlogPostList();
 
 function Home() {
   return (
@@ -26,6 +26,15 @@ function Home() {
       ))}
     </div>
   );
+}
+
+export async function generateMetadata() {
+  return {
+    title: `${BLOG_TITLE}`,
+    description: {
+      content: "A wonderful blog about JavaScript",
+    },
+  };
 }
 
 export default Home;
