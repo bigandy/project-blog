@@ -10,6 +10,8 @@ import { loadBlogPost } from "@/helpers/file-helpers";
 
 import { BLOG_TITLE } from "@/constants";
 
+import CodeSnippet from "@/components/CodeSnippet";
+
 const getPostDetails = cache(loadBlogPost);
 
 async function BlogPost({ params }) {
@@ -23,7 +25,12 @@ async function BlogPost({ params }) {
     <article className={styles.wrapper}>
       <BlogHero title={title} publishedOn={publishedOn} />
       <div className={styles.page}>
-        <MDXRemote source={content} />
+        <MDXRemote
+          source={content}
+          components={{
+            pre: CodeSnippet,
+          }}
+        />
       </div>
     </article>
   );
