@@ -20,6 +20,10 @@ const DivisionGroupsDemo = dynamic(() =>
   import("@/components/DivisionGroupsDemo")
 );
 
+const CircularColorsDemo = dynamic(() =>
+  import("@/components/CircularColorsDemo")
+);
+
 async function BlogPost({ params }) {
   const { postSlug } = params;
   const {
@@ -36,6 +40,7 @@ async function BlogPost({ params }) {
           components={{
             pre: CodeSnippet,
             DivisionGroupsDemo,
+            CircularColorsDemo,
           }}
         />
       </div>
