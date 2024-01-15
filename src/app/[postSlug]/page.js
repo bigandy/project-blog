@@ -14,6 +14,12 @@ import CodeSnippet from "@/components/CodeSnippet";
 
 const getPostDetails = cache(loadBlogPost);
 
+import dynamic from "next/dynamic";
+
+const DivisionGroupsDemo = dynamic(() =>
+  import("@/components/DivisionGroupsDemo")
+);
+
 async function BlogPost({ params }) {
   const { postSlug } = params;
   const {
@@ -29,6 +35,7 @@ async function BlogPost({ params }) {
           source={content}
           components={{
             pre: CodeSnippet,
+            DivisionGroupsDemo,
           }}
         />
       </div>
