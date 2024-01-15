@@ -8,13 +8,14 @@ import SliderControl from "@/components/SliderControl";
 
 import Equation from "./Equation";
 import styles from "./DivisionGroupsDemo.module.css";
-import { motion } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
 
 function DivisionGroupsDemo({
   numOfItems = 12,
   initialNumOfGroups = 1,
   includeRemainderArea,
 }) {
+  const demoId = React.useId();
   const [numOfGroups, setNumOfGroups] = React.useState(initialNumOfGroups);
 
   const numOfItemsPerGroup = Math.floor(numOfItems / numOfGroups);
@@ -50,19 +51,22 @@ function DivisionGroupsDemo({
       <div className={styles.demoWrapper}>
         <div className={clsx(styles.demoArea)} style={gridStructure}>
           {range(numOfGroups).map((groupIndex) => (
-            <div key={groupIndex} className={styles.group}>
-              {range(numOfItemsPerGroup).map((index) => {
-                const layoutId = `${groupIndex + index}`;
-                console.log({ layoutId });
-                return (
-                  <motion.div
-                    layoutId={layoutId}
-                    key={layoutId}
-                    className={styles.item}
-                  />
-                );
-              })}
-            </div>
+            <LayoutGroup key={groupIndex}>
+              <div className={styles.group}>
+                {range(numOfItemsPerGroup).map((index) => {
+                  const layoutId = `${
+                    index + (groupIndex * numOfItemsPerGroup + 1)
+                  }-${demoId}`;
+                  return (
+                    <motion.div
+                      layoutId={layoutId}
+                      key={layoutId}
+                      className={styles.item}
+                    />
+                  );
+                })}
+              </div>
+            </LayoutGroup>
           ))}
         </div>
       </div>
