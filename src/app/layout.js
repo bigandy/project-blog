@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useCallback, useEffect } from "react";
 import { Work_Sans, Spline_Sans_Mono } from "next/font/google";
 import clsx from "clsx";
 import RespectMotionPreferences from "@/components/RespectMotionPreferences";
@@ -23,8 +24,14 @@ const monoFont = Spline_Sans_Mono({
 });
 
 function RootLayout({ children }) {
-  // TODO: Dynamic theme depending on user preference
-  const theme = "light";
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const handleThemeClick = useCallback(() => {
+    setTheme((theme) => (theme === "light" ? "dark" : "light"));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
     <RespectMotionPreferences>
@@ -35,7 +42,7 @@ function RootLayout({ children }) {
         style={theme === "light" ? LIGHT_TOKENS : DARK_TOKENS}
       >
         <body>
-          <Header theme={theme} />
+          <Header theme={theme} handleThemeClick={handleThemeClick} />
           <main>{children}</main>
           <Footer />
         </body>
